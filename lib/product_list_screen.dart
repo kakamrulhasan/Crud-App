@@ -26,15 +26,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           separatorBuilder: (context, index) {
             return Divider();
           }),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => AddProductScreen()),
-      //     );
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
+      
     );
   }
 
