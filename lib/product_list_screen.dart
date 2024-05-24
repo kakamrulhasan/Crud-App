@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_36/add_product_screen.dart';
 import 'package:flutter_application_36/update_product_screen%20.dart';
 
 class ProductListScreen extends StatefulWidget {
