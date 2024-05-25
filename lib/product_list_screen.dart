@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_36/add_product_screen.dart';
+import 'package:flutter_application_36/product.dart';
 import 'package:flutter_application_36/update_product_screen%20.dart';
 import 'package:http/http.dart';
 
@@ -70,13 +71,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
       final jsonproductList = decodedData['data'];
       for (Map<String, dynamic> p in jsonproductList) {
         Product product = Product(
-            id: p['_id'] ?? 'unknown',
+            id: p['_id'] ?? '',
             productName: p['ProductName'] ?? 'unknown',
-            productCode: p['ProductCode'] ?? 'unknown',
-            image: p['Img'] ?? 'unknown',
-            unitPrice: p['UnitPrice'] ?? 'unknown',
-            totalPrice: p['TotalPrice'],
-            quantity: p['Qty'] ?? 'unknown');
+            productCode: p['ProductCode'] ?? '',
+            image: p['Img'] ?? '',
+            unitPrice: p['UnitPrice'] ?? '',
+            totalPrice: p['TotalPrice']??'',
+            quantity: p['Qty'] ?? '');
         productList.add(product);
       }
     } else {
@@ -155,29 +156,4 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 }
 
-class Product {
-  // "_id": "665210685d34875ba9ea45f0",
-  // "ProductName": "[",
-  // "ProductCode": "]",
-  // "Img": "]",
-  // "UnitPrice": "]",
-  // "Qty": "]",
-  // "TotalPrice": "[",
-  // "CreatedDate": "2024-05-23T14:56:20.001Z"
-  final String id;
-  final String productName;
-  final String productCode;
-  final String image;
-  final String unitPrice;
-  final String quantity;
-  final String totalPrice;
 
-  Product(
-      {required this.id,
-      required this.productName,
-      required this.productCode,
-      required this.image,
-      required this.unitPrice,
-      required this.totalPrice,
-      required this.quantity});
-}
