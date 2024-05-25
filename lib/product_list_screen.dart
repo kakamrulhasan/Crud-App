@@ -112,11 +112,16 @@ class _ProductListScreenState extends State<ProductListScreen> {
       trailing: Wrap(
         children: [
           IconButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const UpdateProductScreen()));
+                        builder: (context) => UpdateProductScreen(
+                              product: product,
+                            )));
+                if (result == true) {
+                  _getProductList();
+                }
               },
               icon: Icon(Icons.edit)),
           IconButton(
