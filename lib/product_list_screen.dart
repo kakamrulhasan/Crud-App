@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_36/add_product_screen.dart';
 import 'package:flutter_application_36/update_product_screen%20.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -12,19 +13,26 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Product List'),
-      ),
-      body: ListView.separated(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return _buildProductItem();
+        appBar: AppBar(
+          title: Text('Product List'),
+        ),
+        body: ListView.separated(
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return _buildProductItem();
+            },
+            separatorBuilder: (context, index) {
+              return Divider();
+            }),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddProductScreen()),
+            );
           },
-          separatorBuilder: (context, index) {
-            return Divider();
-          }),
-      
-    );
+          child: Icon(Icons.add),
+        ));
   }
 
   Widget _buildProductItem() {
@@ -75,12 +83,18 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel')),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.orange),
+                  )),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Yes, delete'))
+                  child: Text(
+                    'Yes, delete',
+                    style: TextStyle(color: Colors.orange),
+                  ))
             ],
           );
         });
