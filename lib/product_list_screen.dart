@@ -31,19 +31,24 @@ class _ProductListScreenState extends State<ProductListScreen> {
         appBar: AppBar(
           title: Text('Product List'),
         ),
-        body: Visibility(
-          visible: _getproductListInProgress == false,
-          replacement: const Center(
-            child: CircularProgressIndicator(),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            _getProductList();
+          },
+          child: Visibility(
+            visible: _getproductListInProgress == false,
+            replacement: const Center(
+              child: CircularProgressIndicator(),
+            ),
+            child: ListView.separated(
+                itemCount: productList.length,
+                itemBuilder: (context, index) {
+                  return _buildProductItem(productList[index]);
+                },
+                separatorBuilder: (context, index) {
+                  return Divider();
+                }),
           ),
-          child: ListView.separated(
-              itemCount: productList.length,
-              itemBuilder: (context, index) {
-                return _buildProductItem(productList[index]);
-              },
-              separatorBuilder: (context, index) {
-                return Divider();
-              }),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -76,7 +81,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
             productCode: p['ProductCode'] ?? '',
             image: p['Img'] ?? '',
             unitPrice: p['UnitPrice'] ?? '',
-            totalPrice: p['TotalPrice']??'',
+            totalPrice: p['TotalPrice'] ?? '',
             quantity: p['Qty'] ?? '');
         productList.add(product);
       }
@@ -85,12 +90,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
           const SnackBar(content: Text('Get product list failed! Try again!')));
     }
     _getproductListInProgress = false;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
-  Widget _buildProductItem( Product product) {
+  Widget _buildProductItem(Product product) {
     return ListTile(
       // leading: Image.network(
       //   product.image,
@@ -155,5 +158,3 @@ class _ProductListScreenState extends State<ProductListScreen> {
         });
   }
 }
-
-
