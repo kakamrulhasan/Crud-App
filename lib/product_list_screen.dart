@@ -126,7 +126,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
               icon: Icon(Icons.edit)),
           IconButton(
               onPressed: () {
-                _showDeleteConfirmationDialog();
+                _showDeleteConfirmationDialog(product.id);
               },
               icon: Icon(Icons.delete)),
         ],
@@ -134,7 +134,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 
-  void _showDeleteConfirmationDialog() {
+  void _showDeleteConfirmationDialog(String productId) {
     showDialog(
         context: context,
         builder: (context) {
@@ -153,6 +153,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    _deleteProduct(productId);
                   },
                   child: Text(
                     'Yes, delete',
@@ -161,5 +162,24 @@ class _ProductListScreenState extends State<ProductListScreen> {
             ],
           );
         });
+  }
+
+  Future<void> _deleteProduct(String productId) async {
+    _getproductListInProgress = true;
+    setState(() {});
+    String deleteProductUrl =
+        'https://crud.teamrabbil.com/api/v1/DeleteProduct/$productId';
+    Uri uri = Uri.parse(deleteProductUrl);
+    Response response = await get(uri);
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      _getProductList();
+    } else {
+      _getproductListInProgress = false;
+      setState(() {});
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Delete product failed! Try again!')));
+    }
   }
 }
